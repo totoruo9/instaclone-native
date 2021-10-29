@@ -8,11 +8,19 @@ const Stack = createNativeStackNavigator();
 
 const LoggedOutNav = () => {
     return (
-        //@ts-ignore
-        <Stack.Navigator screenOptions={{headerBackTitleVisible:false, headerTintColor:"#ff4a5b"}}>
-            <Stack.Screen name="Wellcome" component={Wellcome} options={{headerTitleAlign:"center"}} />
-            <Stack.Screen name="Login" component={Login} options={{headerShown: false}} />
-            <Stack.Screen name="CreateAccount" component={CreateAccount} />
+        <Stack.Navigator screenOptions={{headerBackTitleVisible:false}}>
+            <Stack.Screen name="Wellcome" component={Wellcome} options={{headerShown:false}} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen
+                name="CreateAccount"
+                component={CreateAccount}
+                options={{
+                    headerTitle: "",
+                    headerTransparent: true,
+                    headerTintColor: "#fff",
+                    headerShadowVisible: false
+                }}
+            />
         </Stack.Navigator>
     )
 }

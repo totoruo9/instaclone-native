@@ -6,6 +6,9 @@ import * as Font from 'expo-font';
 import { Asset } from 'expo-asset';
 import LoggedOutNav from './navigators/LoggedOutNav';
 import { NavigationContainer } from '@react-navigation/native';
+import { Appearance, AppearanceProvider } from 'react-native-appearance';
+import { ThemeProvider } from 'styled-components/native';
+
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -13,11 +16,12 @@ export default function App() {
   const preload = () => {
     const fontsToLoad = [Ionicons.font];
     const fontPromises = fontsToLoad.map(font => Font.loadAsync(font));
-    const imagesToLoad = [require("./assets/logo.png"), "https://upload.wikimedia.org/wikipedia/commons/2/2a/Instagram_logo.svg"];
+    const imagesToLoad = [require("./assets/logo-white.png"), "https://upload.wikimedia.org/wikipedia/commons/2/2a/Instagram_logo.svg"];
     const imagePromises = imagesToLoad.map(image => Asset.loadAsync(image));
     //@ts-ignore
     return Promise.all([...fontPromises, ...imagePromises]);
   };
+
   if(loading){
     return (
       <AppLoading
@@ -27,10 +31,17 @@ export default function App() {
         onFinish={onFinish}
       />
     );
-  }
+  };
+
+  const subscription = Appearance.addChangeListener(({colorScheme}) => {
+    console.log(colorScheme);
+  });
+
   return (
-    <NavigationContainer>
-      <LoggedOutNav />
-    </NavigationContainer>
+    <AppearanceProvider>
+        <NavigationContainer>
+          <LoggedOutNav />
+        </NavigationContainer>
+    </AppearanceProvider>
   );
 }
