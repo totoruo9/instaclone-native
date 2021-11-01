@@ -27,7 +27,7 @@ const ContainerText = styled.Text`
 const LoginLink = styled.Text<{marginTop:any}>`
     color: ${colors.blue};
     font-weight: 600;
-    margin-top: ${props => props.marginTop};
+    margin-top: ${props => props.marginTop && `${props.marginTop}px`};
 `;
 
 export const FullButton:React.FC<ButtonType> = ({onPress, text, disabled=false}) => {
@@ -38,7 +38,7 @@ export const FullButton:React.FC<ButtonType> = ({onPress, text, disabled=false})
     )
 };
 
-export const TextButton:React.FC<ButtonType> = ({onPress, text, disabled=false, margin}) => {
+export const TextButton:React.FC<ButtonType> = ({onPress, text, disabled=false, margin=0}) => {
     return (
         <TouchableOpacity onPress={onPress} disabled={disabled}>
             <LoginLink marginTop={margin}>{text}</LoginLink>

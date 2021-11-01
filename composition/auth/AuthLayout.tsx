@@ -9,7 +9,7 @@ const Container = styled.View`
     padding: 0 32px;
 `;
 const Logo = styled.Image`
-    max-width: 50%;
+    max-width: 70%;
     width: 100%;
     height: 160px;
 `;
@@ -17,7 +17,7 @@ const Logo = styled.Image`
 export const AuthLayout = ({children}:any) => {
     return (
         <Container>
-            <Logo resizeMode="center" source={require("../../assets/logo-white.png")} />
+            <Logo resizeMode="contain" source={require("../../assets/logo-white.png")} />
             {children}
         </Container>
     )
