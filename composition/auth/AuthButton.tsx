@@ -12,7 +12,7 @@ interface ButtonType {
 
 const Container = styled.TouchableOpacity`
     background-color: ${colors.blue};
-    padding: 12px 16px;
+    padding: 16px;
     border-radius: 4px;
     width: 100%;
     opacity: ${props => props.disabled ? .5 : 1};
