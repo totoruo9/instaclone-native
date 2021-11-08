@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Text, TouchableOpacity, View } from "react-native";
-import { isLoggedInVar } from "../apollo";
+import { isLoggedInVar, logUserIn } from "../apollo";
 import { FullButton } from "../composition/auth/AuthButton";
 import { AuthLayout } from "../composition/auth/AuthLayout";
 import { TextInput } from "../composition/auth/AuthShared";
@@ -29,10 +29,10 @@ const Login = ({route: {params}}:any) => {
     const usernameRef = useRef();
     const passwordRef = useRef();
 
-    const onCompleted = (data:any) => {
+    const onCompleted = async(data:any) => {
         const {login: {ok, token}} = data;
         if(ok) {
-            isLoggedInVar(true);
+            await logUserIn(token);
         }
     }
     const [logInMutation, {loading}] = useMutation(LOGIN_MUTATION, {
