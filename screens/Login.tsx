@@ -36,7 +36,8 @@ const Login = ({navigation}:any) => {
                 ref={usernameRef}
                 placeholder="User Name"
                 placeholderTextColor="rgba(255,255,255,.5)"
-                returnKeyType="next"        
+                returnKeyType="next"
+                autoCapitalize="none"
                 onSubmitEditing={() => onNext(passwordRef)}
                 onChangeText={(text) => setValue("username", text)}
             />

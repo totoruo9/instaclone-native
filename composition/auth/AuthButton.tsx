@@ -1,5 +1,5 @@
 import React, { ReactChild } from "react";
-import { TouchableOpacity } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../../colors";
 
@@ -7,7 +7,8 @@ interface ButtonType {
     onPress: any,
     text: string,
     disabled?: boolean,
-    margin?: number
+    margin?: number,
+    loading?: boolean
 };
 
 const Container = styled.TouchableOpacity`
@@ -30,10 +31,14 @@ const LoginLink = styled.Text<{marginTop:any}>`
     margin-top: ${props => props.marginTop && `${props.marginTop}px`};
 `;
 
-export const FullButton:React.FC<ButtonType> = ({onPress, text, disabled=false}) => {
+export const FullButton:React.FC<ButtonType> = ({onPress, text, disabled=false, loading}) => {
     return (
         <Container onPress={onPress} disabled={disabled}>
-            <ContainerText>{text}</ContainerText>
+            {
+                loading
+                    ? <ActivityIndicator color="white" />
+                    : <ContainerText>{text}</ContainerText>
+            }
         </Container>
     )
 };

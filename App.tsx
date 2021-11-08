@@ -7,7 +7,8 @@ import { Asset } from 'expo-asset';
 import LoggedOutNav from './navigators/LoggedOutNav';
 import { NavigationContainer } from '@react-navigation/native';
 import { Appearance, AppearanceProvider } from 'react-native-appearance';
-import { ThemeProvider } from 'styled-components/native';
+import { ApolloProvider } from '@apollo/client';
+import client from './apollo';
 
 
 export default function App() {
@@ -38,10 +39,12 @@ export default function App() {
   });
 
   return (
-    <AppearanceProvider>
-        <NavigationContainer>
-          <LoggedOutNav />
-        </NavigationContainer>
-    </AppearanceProvider>
+    <ApolloProvider client={client}>
+      <AppearanceProvider>
+          <NavigationContainer>
+            <LoggedOutNav />
+          </NavigationContainer>
+      </AppearanceProvider>
+    </ApolloProvider>
   );
 }

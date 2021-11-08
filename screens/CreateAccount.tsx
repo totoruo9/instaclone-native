@@ -23,11 +23,21 @@ const CreateAccount = ({navigation}:any) => {
     };
 
     useEffect(() => {
-        register("firstname");
-        register("lastname");
-        register("username");
-        register("email");
-        register("password");
+        register("firstname", {
+            required: true,
+        });
+        register("lastname", {
+            required: true,
+        });
+        register("username", {
+            required: true,
+        });
+        register("email", {
+            required: true,
+        });
+        register("password", {
+            required: true,
+        });
     }, [register])
 
     return (
@@ -77,7 +87,11 @@ const CreateAccount = ({navigation}:any) => {
                 onChangeText={(text) => setValue("password", text)}
                 onSubmitEditing={handleSubmit(onValid)}
             />
-            <FullButton disabled={false} text="Join" onPress={handleSubmit(onValid)} />
+            <FullButton
+                text="Join"
+                loading={true}
+                onPress={handleSubmit(onValid)}
+            />
         </AuthLayout>
     )
 }
