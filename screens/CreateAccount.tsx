@@ -1,3 +1,4 @@
+import { gql, useMutation } from "@apollo/client";
 import React, { useRef } from "react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -5,9 +6,44 @@ import { FullButton } from "../composition/auth/AuthButton";
 import { AuthLayout } from "../composition/auth/AuthLayout";
 import { TextInput } from "../composition/auth/AuthShared";
 
+const CREATE_ACCOUNT_MUTATION = gql`
+    mutation createAccount(
+        $firstName: String!
+        $lastName: String
+        $username: String!
+        $email: String!
+        $password: String!
+    ) {
+        createAccount(
+            firstName: $firstName
+            lastName: $lastName
+            username: $username
+            email: $email
+            password: $password
+        ) {
+            ok
+            error
+        }
+    }
+`;
+
 const CreateAccount = ({navigation}:any) => {
-    const {register, handleSubmit, setValue} = useForm();
-    const goLogin = () => navigation.navigate("Login");
+    const {register, handleSubmit, setValue, watch, getValues} = useForm();
+
+    const onCompleted = (data:any) => {
+        console.log(data);
+        const {createAccount: {ok}} = data;
+        const {username, password} = getValues();
+        if(ok){
+            navigation.navigate("Login", {
+                username,
+                password
+            });
+        }
+    }
+    const [createAccountMutation, {loading}] = useMutation(CREATE_ACCOUNT_MUTATION, {
+        onCompleted,
+    });
 
     const lastNameRef = useRef();
     const userNameRef = useRef();
@@ -19,14 +55,20 @@ const CreateAccount = ({navigation}:any) => {
     };
 
     const onValid = (data: any) => {
-        console.log(data);
+        if(!loading){
+            createAccountMutation({
+                variables: {
+                    ...data,
+                }
+            })
+        }
     };
 
     useEffect(() => {
-        register("firstname", {
+        register("firstName", {
             required: true,
         });
-        register("lastname", {
+        register("lastName", {
             required: true,
         });
         register("username", {
@@ -47,7 +89,7 @@ const CreateAccount = ({navigation}:any) => {
                 placeholder="First Name"
                 placeholderTextColor="rgba(255,255,255,.5)"
                 returnKeyType="next"
-                onChangeText={(text) => setValue("firstname", text)}
+                onChangeText={(text) => setValue("firstName", text)}
                 onSubmitEditing={() => onNext(lastNameRef)}
             />
             <TextInput
@@ -55,13 +97,13 @@ const CreateAccount = ({navigation}:any) => {
                 placeholder="Last Name"
                 placeholderTextColor="rgba(255,255,255,.5)"
                 returnKeyType="next"
-                onChangeText={(text) => setValue("lastname", text)}
+                onChangeText={(text) => setValue("lastName", text)}
                 onSubmitEditing={() => onNext(userNameRef)}
             />
             <TextInput
                 ref={userNameRef}
                 placeholder="User Name"
-                placeholderTextColor="rgba(255,255,255,.5)"
+                placeholderTextColor="rgba(255,255,255,.5)" 
                 returnKeyType="next"
                 autoCapitalize="none"
                 onChangeText={(text) => setValue("username", text)}
@@ -89,8 +131,15 @@ const CreateAccount = ({navigation}:any) => {
             />
             <FullButton
                 text="Join"
-                loading={true}
+                loading={loading}
                 onPress={handleSubmit(onValid)}
+                disabled={
+                    !watch("firstName")
+                    || !watch("lastName")
+                    || !watch("username")
+                    || !watch("email")
+                    || !watch("password")
+                }
             />
         </AuthLayout>
     )

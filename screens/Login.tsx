@@ -19,8 +19,13 @@ const LOGIN_MUTATION = gql`
     }
 `;
 
-const Login = ({navigation}:any) => {
-    const {register, handleSubmit, setValue, watch} = useForm();
+const Login = ({route: {params}}:any) => {
+    const {register, handleSubmit, setValue, watch} = useForm({
+        defaultValues: {
+            password: params?.password,
+            username: params?.username
+        }
+    });
     const usernameRef = useRef();
     const passwordRef = useRef();
 
@@ -61,6 +66,7 @@ const Login = ({navigation}:any) => {
     return (
         <AuthLayout>
             <TextInput
+                value={watch("username")}
                 ref={usernameRef}
                 placeholder="User Name"
                 placeholderTextColor="rgba(255,255,255,.5)"
@@ -70,6 +76,7 @@ const Login = ({navigation}:any) => {
                 onChangeText={(text) => setValue("username", text)}
             />
             <TextInput
+                value={watch("password")}
                 ref={passwordRef}
                 placeholder="Password"
                 placeholderTextColor="rgba(255,255,255,.65)"
