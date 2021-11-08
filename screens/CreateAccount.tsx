@@ -1,9 +1,12 @@
 import React, { useRef } from "react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { FullButton } from "../composition/auth/AuthButton";
 import { AuthLayout } from "../composition/auth/AuthLayout";
 import { TextInput } from "../composition/auth/AuthShared";
 
 const CreateAccount = ({navigation}:any) => {
+    const {register, handleSubmit, setValue} = useForm();
     const goLogin = () => navigation.navigate("Login");
 
     const lastNameRef = useRef();
@@ -15,9 +18,18 @@ const CreateAccount = ({navigation}:any) => {
         nextOne?.current?.focus();
     };
 
-    const onDone = () => {
-        alert('done');
-    }
+    const onValid = (data: any) => {
+        console.log(data);
+    };
+
+    useEffect(() => {
+        register("firstname");
+        register("lastname");
+        register("username");
+        register("email");
+        register("password");
+    }, [register])
+
     return (
         <AuthLayout>
             <TextInput
@@ -25,6 +37,7 @@ const CreateAccount = ({navigation}:any) => {
                 placeholder="First Name"
                 placeholderTextColor="rgba(255,255,255,.5)"
                 returnKeyType="next"
+                onChangeText={(text) => setValue("firstname", text)}
                 onSubmitEditing={() => onNext(lastNameRef)}
             />
             <TextInput
@@ -32,6 +45,7 @@ const CreateAccount = ({navigation}:any) => {
                 placeholder="Last Name"
                 placeholderTextColor="rgba(255,255,255,.5)"
                 returnKeyType="next"
+                onChangeText={(text) => setValue("lastname", text)}
                 onSubmitEditing={() => onNext(userNameRef)}
             />
             <TextInput
@@ -39,6 +53,8 @@ const CreateAccount = ({navigation}:any) => {
                 placeholder="User Name"
                 placeholderTextColor="rgba(255,255,255,.5)"
                 returnKeyType="next"
+                autoCapitalize="none"
+                onChangeText={(text) => setValue("username", text)}
                 onSubmitEditing={() => onNext(emailRef)}
             />
             <TextInput
@@ -47,6 +63,8 @@ const CreateAccount = ({navigation}:any) => {
                 placeholderTextColor="rgba(255,255,255,.5)"
                 keyboardType="email-address"
                 returnKeyType="next"
+                autoCapitalize="none"
+                onChangeText={(text) => setValue("email", text)}
                 onSubmitEditing={() => onNext(passwrodRef)}
             />
             <TextInput
@@ -56,9 +74,10 @@ const CreateAccount = ({navigation}:any) => {
                 secureTextEntry
                 returnKeyType="join"
                 lastOne={true}
-                onSubmitEditing={onDone}
+                onChangeText={(text) => setValue("password", text)}
+                onSubmitEditing={handleSubmit(onValid)}
             />
-            <FullButton disabled={true} text="Join" onPress={goLogin} />
+            <FullButton disabled={false} text="Join" onPress={handleSubmit(onValid)} />
         </AuthLayout>
     )
 }

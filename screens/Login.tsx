@@ -1,11 +1,15 @@
 import React from "react";
+import { useEffect } from "react";
 import { useRef } from "react";
+import { useForm } from "react-hook-form";
 import { Text, TouchableOpacity, View } from "react-native";
 import { FullButton } from "../composition/auth/AuthButton";
 import { AuthLayout } from "../composition/auth/AuthLayout";
 import { TextInput } from "../composition/auth/AuthShared";
 
 const Login = ({navigation}:any) => {
+    const {register, handleSubmit, setValue} = useForm();
+
     const usernameRef = useRef();
     const passwordRef = useRef();
 
@@ -15,7 +19,16 @@ const Login = ({navigation}:any) => {
 
     const onDone = () => {
         alert('Action Login');
-    }
+    };
+
+    const onValid = (data: any) => {
+        console.log(data);
+    };
+
+    useEffect(() => {
+        register("username");
+        register("password");
+    }, [register]);
     
     return (
         <AuthLayout>
@@ -25,6 +38,7 @@ const Login = ({navigation}:any) => {
                 placeholderTextColor="rgba(255,255,255,.5)"
                 returnKeyType="next"        
                 onSubmitEditing={() => onNext(passwordRef)}
+                onChangeText={(text) => setValue("username", text)}
             />
             <TextInput
                 ref={passwordRef}
@@ -33,9 +47,10 @@ const Login = ({navigation}:any) => {
                 secureTextEntry
                 returnKeyType="join"
                 lastOne={true}
-                onSubmitEditing={onDone}
+                onChangeText={(text) => setValue("password", text)}
+                onSubmitEditing={handleSubmit(onValid)}
             />
-            <FullButton text="Login" onPress={() => {}} disabled={false} />
+            <FullButton text="Login" onPress={handleSubmit(onValid)} disabled={false} />
         </AuthLayout>
     )
 }
