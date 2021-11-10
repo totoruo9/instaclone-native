@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const Profile = () => {
+const Me = () => {
     return (
         <View style={{backgroundColor:"#000", flex:1, justifyContent:"center", alignItems:"center"}}>
-            <Text style={{color:"#fff"}}>Someones Profile!</Text>
+            <Text style={{color:"#fff"}}>Me!</Text>
         </View>
     )
 }
 
-export default Profile;
+export default Me;
