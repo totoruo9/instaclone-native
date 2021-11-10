@@ -5,6 +5,8 @@ import Feed from "../screens/Feed";
 import Profile from "../screens/Profile";
 import Notifications from "../screens/Notifications";
 import Search from "../screens/Search";
+import { View } from "react-native";
+import TabIcon from "../composition/nav/TabIcon";
 
 const Tabs = createBottomTabNavigator()
 
@@ -22,10 +24,11 @@ const LoggedInNav = () => {
             tabBarActiveTintColor:"#fff",
             tabBarShowLabel:false
         }}>
-            <Tabs.Screen name="Feed" component={Feed} options={{tabBarIcon: ({focused, color, size}) => <Ionicons name="home" size={focused ? 24 : 18} color={color} />}} />
-            <Tabs.Screen name="Search" component={Search} options={{tabBarIcon: ({focused, color, size}) => <Ionicons name="search" size={focused ? 24 : 18} color={color} />}} />
-            <Tabs.Screen name="Notifications" component={Notifications} options={{tabBarIcon: ({focused, color, size}) => <Ionicons name="heart-outline" size={focused ? 24 : 18} color={color} />}} />
-            <Tabs.Screen name="Profile" component={Profile} options={{tabBarIcon: ({focused, color, size}) => <Ionicons name="person" size={focused ? 24 : 18} color={color} />}} />
+            <Tabs.Screen name="Feed" component={Feed} options={{tabBarIcon: ({focused, color, size}) => <TabIcon iconName={"home"} color={color} focused={focused} />}} />
+            <Tabs.Screen name="Search" component={Search} options={{tabBarIcon: ({focused, color, size}) => <TabIcon iconName={"search"} color={color} focused={focused} />}} />
+            <Tabs.Screen name="Camera" component={View} options={{tabBarIcon: ({focused, color, size}) => <TabIcon iconName={"camera"} color={color} focused={focused} />}} />
+            <Tabs.Screen name="Notifications" component={Notifications} options={{tabBarIcon: ({focused, color, size}) => <TabIcon iconName={"heart"} color={color} focused={focused} />}} />
+            <Tabs.Screen name="Profile" component={Profile} options={{tabBarIcon: ({focused, color, size}) => <TabIcon iconName={"person"} color={color} focused={focused} />}} />
         </Tabs.Navigator>
     )
 }
