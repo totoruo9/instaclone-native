@@ -6,7 +6,7 @@ import Feed from "../screens/Feed";
 import Search from "../screens/Search";
 import Me from "../screens/Me";
 import Notifications from "../screens/Notifications";
-import { StatusBar } from "react-native";
+import { Image, StatusBar } from "react-native";
 
 
 const Stack = createStackNavigator();
@@ -23,27 +23,44 @@ export default function StackNavFactory({screenName}:any) {
                     headerStyle: {
                         backgroundColor: "#000",
                         shadowColor: "rgba(255,255,255,.3 )",
-                    }
+                    },
+                    headerMode: "screen"
                 }}
             >
                 {
                     screenName === "Feed"
-                        ? <Stack.Screen name="Feed" component={Feed} />
+                        ? <Stack.Screen
+                            name="Feed"
+                            component={Feed}
+                            options={{
+                                headerTitle: () =>
+                                    <Image style={{ maxWidth: 88}} resizeMode="contain" source={require("../assets/logo-white.png")} />
+                            }}
+                        />
                         : null
                 }
                 {
                     screenName === "Search"
-                        ? <Stack.Screen name="Search" component={Search} />
+                        ? <Stack.Screen
+                            name="Search"
+                            component={Search}
+                        />
                         : null
                 }
                 {
                     screenName === "Notifications"
-                        ? <Stack.Screen name="Notifications" component={Notifications} />
+                        ? <Stack.Screen
+                            name="Notifications"
+                            component={Notifications}
+                        />
                         : null
                 }
                 {
                     screenName === "Me"
-                        ? <Stack.Screen name="Me" component={Me} />
+                        ? <Stack.Screen
+                            name="Me"
+                            component={Me}
+                        />
                         : null
                 }
                 <Stack.Screen name="Profile" component={Profile} />
