@@ -11,7 +11,7 @@ import { Image, StatusBar } from "react-native";
 
 const Stack = createStackNavigator();
 
-export default function StackNavFactory({screenName}:any) {
+const StackNavFactory = ({screenName}:any) => {
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -69,3 +69,5 @@ export default function StackNavFactory({screenName}:any) {
         </> 
     )
 }
+
+export default StackNavFactory;
