@@ -34,7 +34,7 @@ export default function StackNavFactory({screenName}:any) {
                             component={Feed}
                             options={{
                                 headerTitle: () =>
-                                    <Image style={{ maxWidth: 88}} resizeMode="contain" source={require("../assets/logo-white.png")} />
+                                    <Image style={{ maxWidth: 88 }} resizeMode="contain" source={require("../assets/logo-white.png")} />
                             }}
                         />
                         : null
